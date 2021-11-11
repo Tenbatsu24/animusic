@@ -34,9 +34,10 @@ class Connection:
             print(error)
             exit(0)
 
-    def acquire(self):
+    def acquire(self, schema):
         if self.cur is None:
             self.cur = self.conn.cursor()
+            self.cur.execute(f'SET search_path = {schema}, public;')
 
     def execute(self, sql):
         self.cur.execute(sql)
